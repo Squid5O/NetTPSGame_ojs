@@ -40,3 +40,10 @@ UNetConnection 으로 서버 클라이언트 연결
 웹은 HTTP, 소켓은 각 게임사가 만듬
 
 세션- 네트워크 연결 확인 ( 웹)
+
+TCP/IP<->UDP 이 신뢰성 X
+ㄴ 그래도 편해서 UDP 많이 씀
+
+----------------------
+quin 은 manny를 상속받음
+ainmeinstance
