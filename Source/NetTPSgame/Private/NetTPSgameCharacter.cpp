@@ -52,6 +52,12 @@ ANetTPSgameCharacter::ANetTPSgameCharacter()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
+	//손 컴포넌트를 생성해서 GetMesh의 GunPoint 에 붙이고 싶다.
+	//handComp = CreateDefaultSubobject<USceneComponent>(TEXT("handComp"));
+	//handComp->SetupAttachment(GetMesh(), TEXT("GunPoint"));
+	//handComp->SetRelativeLocationAndRotation(FVector(), FRotator());
+
+
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 }
@@ -71,6 +77,23 @@ void ANetTPSgameCharacter::BeginPlay()
 	}
 }
 
+
+void ANetTPSgameCharacter::PickupPistol(const FInputActionValue& Value)
+{
+	if (bHasPistol)
+		return;
+
+	bHasPistol = true;
+}
+
+void ANetTPSgameCharacter::DropPistol(const FInputActionValue& Value)
+{
+	if (false == bHasPistol)
+		return;
+
+	bHasPistol = false;
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Input
 
@@ -88,6 +111,13 @@ void ANetTPSgameCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ANetTPSgameCharacter::Look);
+
+		// Pistoalpick
+		EnhancedInputComponent->BindAction(PickupPistolAction, ETriggerEvent::Started, this, &ANetTPSgameCharacter::PickupPistol);
+
+		// Pistoaldrop
+		EnhancedInputComponent->BindAction(DropPistolAction, ETriggerEvent::Started, this, &ANetTPSgameCharacter::DropPistol);
+
 	}
 	else
 	{

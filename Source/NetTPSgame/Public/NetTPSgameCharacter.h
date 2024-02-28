@@ -69,5 +69,28 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
+	/////////////////----------------------------///////////////////////////////////////////
+protected:
+
+	void PickupPistol(const FInputActionValue& Value);
+	void DropPistol(const FInputActionValue& Value);
+
+public:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	bool bHasPistol = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* PickupPistolAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* DropPistolAction;
+
+	//UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	//class UStaticMeshComponent* handComp;
+
+
 };
+
+
 
